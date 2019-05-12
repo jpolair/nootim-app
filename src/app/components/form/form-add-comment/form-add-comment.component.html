@@ -1,0 +1,8 @@
+<form [formGroup]="commentForm">
+  <ion-textarea
+    formControlName="comment"
+    class="add-comment"
+    type="text">
+  </ion-textarea>
+  <ion-button [disabled]="!commentForm.valid" (click)="submit()">Envoi</ion-button>
+</form>

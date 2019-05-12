@@ -1,0 +1,28 @@
+<div class="card-flash">
+  <div class="owner">
+    <div class="avatar"><img src="../../../assets/images/profil.jpg"></div>
+    <div class="name">{{ owner }}</div>
+  </div>
+  <div class="body-message">
+    {{ flash.content }}
+  </div>
+  
+  <div class="add-comment">
+    <div (click)="addEye()" [ngClass]="{ 'eyes-activate': eyesNumber > 0 }">
+      <ion-icon name="heart"></ion-icon>
+      <span class="eyes-number">{{ eyesNumber }}</span>
+    </div>
+    <div (click)="addCom()">
+      <span class="reaction">com.</span>
+    </div>
+  </div>
+  <div *ngIf="isOpenAddCom">
+    <app-form-add-comment (validForm)="sendComment($event)"></app-form-add-comment>
+  </div>
+  <div *ngIf="comments && comments.length > 0" class="comments">
+    <app-comment-item 
+    *ngFor="let comment of comments.reverse()"
+    [comment]="comment">
+  </app-comment-item>
+  </div>
+</div>

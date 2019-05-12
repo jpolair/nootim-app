@@ -1,0 +1,23 @@
+.header-page {
+    text-align: center;
+    .add-post-button {
+        margin: 10px 0 20px 0;
+    }
+}
+.form-message {
+    ion-textarea {
+        margin-top: 20px;
+        background: white;
+        padding: 20px;
+        text-align: left;
+    }
+    ion-button {
+        margin: 0 0 10px 0;
+    }
+    .content-length {
+        margin-top: 10px;
+        text-align: right;
+        color: grey;
+    }
+}
+

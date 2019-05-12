@@ -1,0 +1,33 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>
+      Home
+    </ion-title>
+    <ion-icon (click)="logout()" slot="end" name="power"></ion-icon>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content padding>
+  <div class="header-page">
+    <ion-button class="add-post-button" (click)="addMessage()">
+      Poste ton flash
+    </ion-button>
+    <div class="form-message" *ngIf="openFormMessage">
+      <form [formGroup]="messageFormGroup">
+        <ion-textarea type="text" maxlength="100" formControlName="content"></ion-textarea>
+        <div class="content-length">{{ messageFormGroup.get("content").value.length }} / 100</div>
+        <ion-button
+          [disabled]="!messageFormGroup.valid"
+          (click)="postMessage()"
+          color="success">Envoyer</ion-button>
+      </form>
+    </div>
+
+  </div>
+  <div class="content-page">
+    <div *ngFor="let message of messages?.reverse()">
+      <app-message-item [flash]="message"></app-message-item>
+    </div>
+    <div></div>
+  </div>
+</ion-content>
