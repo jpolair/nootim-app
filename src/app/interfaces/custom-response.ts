@@ -19,10 +19,8 @@ export interface CustomResponse {
 }
 
 export interface ResponseAPI {
-    success: boolean;
     status: number;
     message: string;
-    data: object | object[];
-    error_code?: number;
-    error_message?: string;
+    data: any;
+    error: Error;
 }

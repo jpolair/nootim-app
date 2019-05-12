@@ -8,7 +8,7 @@ import { MessageService } from '../services/message.service';
 import { FormBuilder, Validators, FormGroup } from '@angular/forms';
 
 import { MyMessage } from '../interfaces/message';
-import { CustomResponse } from '../interfaces/custom-response';
+import { CustomResponse, ResponseAPI } from '../interfaces/custom-response';
 
 @Component({
   selector: 'app-home',
@@ -33,10 +33,10 @@ export class HomePage implements OnInit {
   public ngOnInit() {
     this.socketService.connect();
     this.socketService.listen('messageCreated')
-    .subscribe( (data: CustomResponse) => {
+    .subscribe( (data: ResponseAPI) => {
       this.messageService.getMessages()
-      .subscribe((messages: CustomResponse) => {
-        this.messages = messages.messagesFetched;
+      .subscribe((messages: ResponseAPI) => {
+        this.messages = messages.data;
       });
     });
     this.messageFormGroup = this.fb.group({
@@ -53,8 +53,8 @@ export class HomePage implements OnInit {
         console.log('error', err);
       });
     this.messageService.getMessages()
-      .subscribe((messages: CustomResponse) => {
-        this.messages = messages.messagesFetched;
+      .subscribe((messages: ResponseAPI) => {
+        this.messages = messages.data;
       }, err => {
         console.log('errror', err);
       });

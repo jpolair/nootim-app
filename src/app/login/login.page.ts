@@ -34,7 +34,6 @@ export class LoginPage implements OnInit {
             this.router.navigate(['/']);
           }
           if (!this.authService.isLogged()) {
-            console.log('user ', user);
             this.presentAlert(user.message);
           }
         }, err => {
@@ -45,7 +44,7 @@ export class LoginPage implements OnInit {
     }
   }
 
-  public async presentAlert(message) {
+  public async presentAlert(message: string) {
     const alert = await this.alertCtrl.create({
       header: 'Erreur',
       message

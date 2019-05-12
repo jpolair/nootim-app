@@ -4,6 +4,7 @@ import { Comment } from '../../interfaces/comment';
 import { User } from 'src/app/interfaces/user';
 import { UserService } from 'src/app/services/user.service';
 import { CommentService } from '../../services/comment.service';
+import { ResponseAPI } from 'src/app/interfaces/custom-response';
 
 @Component({
   selector: 'app-message-item',
@@ -22,8 +23,8 @@ export class MessageItemComponent implements OnInit, OnChanges {
 
   ngOnInit() {
     this.commentService.getMessageComments(this.flash._id)
-    .subscribe((data: any) => {
-      this.comments = data.commentsFetched;
+    .subscribe((comments: ResponseAPI) => {
+      this.comments = comments.data;
     });
   }
 
