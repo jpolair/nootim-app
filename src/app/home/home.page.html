@@ -1,7 +1,7 @@
 <ion-header>
   <ion-toolbar>
     <ion-title>
-      Home
+      Nootim
     </ion-title>
     <ion-icon (click)="logout()" slot="end" name="power"></ion-icon>
   </ion-toolbar>
@@ -20,6 +20,7 @@
           [disabled]="!messageFormGroup.valid"
           (click)="postMessage()"
           color="success">Envoyer</ion-button>
+          <ion-button (click)="addImage()"><ion-icon name="images"></ion-icon></ion-button>
       </form>
     </div>
 

@@ -1,10 +1,10 @@
 import { Component, OnInit, Input, OnChanges } from '@angular/core';
 import { MyMessage } from '../../interfaces/message';
 import { Comment } from '../../interfaces/comment';
-import { User } from 'src/app/interfaces/user';
-import { UserService } from 'src/app/services/user.service';
 import { CommentService } from '../../services/comment.service';
 import { ResponseAPI } from 'src/app/interfaces/custom-response';
+import { MessageService } from 'src/app/services/message.service';
+import { SocketService } from 'src/app/services/socket.service';
 
 @Component({
   selector: 'app-message-item',
@@ -15,16 +15,25 @@ export class MessageItemComponent implements OnInit, OnChanges {
   @Input() flash: any;
 
   public owner: any;
-  public eyesNumber = 3;
+  public eyesNumber = 0;
   public isOpenAddCom = false;
   public comments: Comment[];
 
-  constructor(private userService: UserService, private commentService: CommentService) { }
+  constructor(private commentService: CommentService, private messageService: MessageService, private socketService: SocketService) { }
 
   ngOnInit() {
     this.commentService.getMessageComments(this.flash._id)
     .subscribe((comments: ResponseAPI) => {
       this.comments = comments.data;
+    });
+    this.socketService.listen('messageUpdated')
+    .subscribe( (data: any) => {
+      this.messageService.getMessageById(data.id)
+      .subscribe( (flash: ResponseAPI) => {
+        if (this.flash._id === data.id) {
+        this.flash.hearts = flash.data.hearts;
+        }
+      });
     });
   }
 
@@ -34,13 +43,14 @@ export class MessageItemComponent implements OnInit, OnChanges {
     }
   }
 
-  public addEye() {
-    console.log('eye added');
+  public addEye(id: string) {
+    this.messageService.updateHeart(id, localStorage.getItem('nootim-userId')).subscribe(() => {
+      this.socketService.emit('messageUpdated', { id });
+    });
   }
 
   public addCom() {
     this.isOpenAddCom = !this.isOpenAddCom;
-    console.log('com added');
   }
 
   public sendComment(comment: string) {

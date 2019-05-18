@@ -8,9 +8,9 @@
   </div>
   
   <div class="add-comment">
-    <div (click)="addEye()" [ngClass]="{ 'eyes-activate': eyesNumber > 0 }">
+    <div (click)="addEye(flash._id)" [ngClass]="{ 'eyes-activate': flash.hearts.length > 0 }">
       <ion-icon name="heart"></ion-icon>
-      <span class="eyes-number">{{ eyesNumber }}</span>
+      <span class="eyes-number">{{ flash.hearts.length }}</span>
     </div>
     <div (click)="addCom()">
       <span class="reaction">com.</span>

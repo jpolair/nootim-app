@@ -22,5 +22,9 @@ export class CommentService {
     return this.http.get(this.baseUrl + 'api/comments/messages/' + messageId);
   }
 
+  public updateHeart(messageId: string, userId: string) {
+    return this.http.put(this.baseUrl + 'api/hearts/' + messageId, { userId });
+  }
+
 
 }

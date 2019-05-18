@@ -29,6 +29,10 @@ export class MessageService {
   }
 
   public deleteMessage(id: string) {
-    return this.http.delete(this.baseUrl + 'api/messages' + id);
+    return this.http.delete(this.baseUrl + 'api/messages/' + id);
+  }
+
+  public updateHeart(messageId: string, userId: string) {
+    return this.http.put(this.baseUrl + 'api/messages/' + messageId +  '/hearts', { userId });
   }
 }

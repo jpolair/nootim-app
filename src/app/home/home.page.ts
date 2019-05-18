@@ -8,7 +8,7 @@ import { MessageService } from '../services/message.service';
 import { FormBuilder, Validators, FormGroup } from '@angular/forms';
 
 import { MyMessage } from '../interfaces/message';
-import { CustomResponse, ResponseAPI } from '../interfaces/custom-response';
+import { ResponseAPI } from '../interfaces/custom-response';
 
 @Component({
   selector: 'app-home',
@@ -43,12 +43,12 @@ export class HomePage implements OnInit {
       content: ['', [Validators.required, Validators.maxLength(100)]]
     });
     this.userService.getUsers()
-      .subscribe(users => {
-        this.users = users;
+      .subscribe((users: ResponseAPI) => {
+        this.users = users.data;
       });
     this.userService.getMe()
-      .subscribe(user => {
-        this.me = user;
+      .subscribe((user: ResponseAPI) => {
+        this.me = user.data;
       }, err => {
         console.log('error', err);
       });
@@ -60,13 +60,17 @@ export class HomePage implements OnInit {
       });
   }
 
-  logout() {
+  public logout() {
     this.router.navigate(['/login']);
     this.authService.logout();
   }
 
   public addMessage() {
     this.openFormMessage = !this.openFormMessage;
+  }
+
+  public addImage() {
+    console.log('addImage');
   }
 
   public postMessage() {
@@ -76,7 +80,7 @@ export class HomePage implements OnInit {
         .subscribe(message => {
           if (message) {
             this.openFormMessage = false;
-            this.messageFormGroup.reset();
+            this.messageFormGroup.reset({ content: '' });
             this.socketService.emit('messageCreated', message);
           }
         }, err => {
@@ -84,9 +88,4 @@ export class HomePage implements OnInit {
         });
     }
   }
-
-  getMe() {
-    //console.log('me', this.me);
-  }
 }
-
